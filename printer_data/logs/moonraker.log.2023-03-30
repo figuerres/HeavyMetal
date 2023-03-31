@@ -1,0 +1,189 @@
+--------------------Moonraker Log Start--------------------
+data_path: /home/denny/printer_data
+is_default_data_path: False
+config_file: /home/denny/printer_data/config/moonraker.conf
+startup_warnings: []
+verbose: False
+debug: False
+asyncio_debug: False
+is_backup_config: False
+is_python_package: False
+log_file: /home/denny/printer_data/logs/moonraker.log
+software_version: v0.8.0-30-g110cbd1
+python_version: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+#################### Moonraker Configuration ####################
+
+[server]
+host = 0.0.0.0
+port = 7125
+max_upload_size = 1024
+klippy_uds_address = ~/printer_data/comms/klippy.sock
+
+[file_manager]
+enable_object_processing = False
+
+[authorization]
+cors_domains = 
+	https://my.mainsail.xyz
+	http://my.mainsail.xyz
+	http://*.local
+	http://*.lan
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FE80::/10
+	::1/128
+
+[octoprint_compat]
+
+[history]
+
+[announcements]
+subscriptions = 
+	mainsail
+
+[update_manager]
+refresh_interval = 168
+enable_auto_refresh = True
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager mainsail-config]
+type = git_repo
+primary_branch = master
+path = ~/mainsail-config
+origin = https://github.com/mainsail-crew/mainsail-config.git
+managed_services = klipper
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+managed_services = crowsnest
+install_script = tools/install.sh
+
+[update_manager sonar]
+type = git_repo
+path = ~/sonar
+origin = https://github.com/mainsail-crew/sonar.git
+primary_branch = main
+managed_services = sonar
+install_script = tools/install.sh
+
+[update_manager client z_calibration]
+type = git_repo
+path = ~/klipper_z_calibration
+origin = https://github.com/protoloft/klipper_z_calibration.git
+install_script = install.sh
+managed_services = klipper
+
+#################################################################
+All Configuration Files:
+/home/denny/printer_data/config/moonraker.conf
+#################################################################
+Unsafe Shutdown Count: 0
+
+System Info:
+
+***python***
+  version: sys.version_info(major=3, minor=9, micro=2, releaselevel='final', serial=0)
+  version_string: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+***cpu_info***
+  cpu_count: 4
+  bits: 32bit
+  processor: armv7l
+  cpu_desc: ARMv7 Processor rev 5 (v7l)
+  serial_number: 50704e00
+  hardware_desc: BCM2835
+  model: Raspberry Pi 2 Model B Rev 1.1
+  total_memory: 761404
+  memory_units: kB
+
+***sd_info***
+  manufacturer_id: 1b
+  manufacturer: Samsung
+  oem_id: 534d
+  product_name: EB1QT
+  product_revision: 3.0
+  serial_number: b37367a1
+  manufacturer_date: 6/2020
+  capacity: 29.8 GiB
+  total_bytes: 32010928128
+
+***distribution***
+  name: Raspbian GNU/Linux 11 (bullseye)
+  id: raspbian
+  version: 11
+  version_parts: {'major': '11', 'minor': '', 'build_number': ''}
+  like: debian
+  codename: bullseye
+  release_info: {'name': 'MainsailOS', 'version_id': '1.0.1', 'codename': 'bullseye', 'id': 'mainsailos'}
+
+***virtualization***
+  virt_type: none
+  virt_identifier: none
+
+***network***
+
+***canbus***
+
+***Allowed Services***
+  klipper_mcu
+  webcamd
+  MoonCord
+  KlipperScreen
+  moonraker-telegram-bot
+  moonraker-obico
+  sonar
+  crowsnest
+  octoeverywhere
+  ratos-configurator
+
+Systemd unit moonraker.service:
+unit_name: moonraker.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'klipper.service', 'sysinit.target']
+**SupplementaryGroups=['moonraker-admin']
+**EnvironmentFiles=/home/denny/printer_data/systemd/moonraker.env
+**ExecStart=/home/denny/moonraker-env/bin/python $MOONRAKER_ARGS
+**WorkingDirectory=/home/denny/moonraker
+**FragmentPath=/etc/systemd/system/moonraker.service
+**Description=API Server for Klipper SV1
+**User=denny
+
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['system.slice', 'sysinit.target', '-.mount']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/denny/printer_data/systemd/klipper.env
+**ExecStart=/home/denny/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/denny/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=denny
+Klipper Version: v0.11.0-148-g52f4e20c
+2023-03-30 17:24:26,293 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2023-03-30 17:24:28,317 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2023-03-30 17:24:36,643 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2023-03-30 17:24:36,648 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2023-03-30 17:24:36,894 [job_state.py:_handle_started()] - Job state initialized: standby
+2023-03-30 17:24:37,182 [klippy_connection.py:_check_ready()] - Klippy ready
+2023-03-30 17:24:37,690 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'temperature_sensor chamber_temp', 'extruder']
+2023-03-30 17:33:27,760 [websockets.py:on_close()] - Websocket Closed: ID: 1740840120 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 2.64
+2023-03-30 18:27:32,369 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.14

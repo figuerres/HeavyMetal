@@ -1,0 +1,321 @@
+--------------------Moonraker Log Start--------------------
+data_path: /home/denny/printer_data
+is_default_data_path: False
+config_file: /home/denny/printer_data/config/moonraker.conf
+startup_warnings: []
+verbose: False
+debug: False
+asyncio_debug: False
+is_backup_config: False
+is_python_package: False
+log_file: /home/denny/printer_data/logs/moonraker.log
+software_version: v0.8.0-30-g110cbd1
+python_version: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+#################### Moonraker Configuration ####################
+
+[server]
+host = 0.0.0.0
+port = 7125
+max_upload_size = 1024
+klippy_uds_address = ~/printer_data/comms/klippy.sock
+
+[file_manager]
+enable_object_processing = False
+
+[authorization]
+cors_domains = 
+	https://my.mainsail.xyz
+	http://my.mainsail.xyz
+	http://*.local
+	http://*.lan
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FE80::/10
+	::1/128
+
+[octoprint_compat]
+
+[history]
+
+[announcements]
+subscriptions = 
+	mainsail
+
+[update_manager]
+refresh_interval = 168
+enable_auto_refresh = True
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager mainsail-config]
+type = git_repo
+primary_branch = master
+path = ~/mainsail-config
+origin = https://github.com/mainsail-crew/mainsail-config.git
+managed_services = klipper
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+managed_services = crowsnest
+install_script = tools/install.sh
+
+[update_manager sonar]
+type = git_repo
+path = ~/sonar
+origin = https://github.com/mainsail-crew/sonar.git
+primary_branch = main
+managed_services = sonar
+install_script = tools/install.sh
+
+#################################################################
+All Configuration Files:
+/home/denny/printer_data/config/moonraker.conf
+#################################################################
+Unsafe Shutdown Count: 0
+
+System Info:
+
+***python***
+  version: sys.version_info(major=3, minor=9, micro=2, releaselevel='final', serial=0)
+  version_string: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+***cpu_info***
+  cpu_count: 4
+  bits: 32bit
+  processor: armv7l
+  cpu_desc: ARMv7 Processor rev 5 (v7l)
+  serial_number: 50704e00
+  hardware_desc: BCM2835
+  model: Raspberry Pi 2 Model B Rev 1.1
+  total_memory: 761404
+  memory_units: kB
+
+***sd_info***
+  manufacturer_id: 1b
+  manufacturer: Samsung
+  oem_id: 534d
+  product_name: EB1QT
+  product_revision: 3.0
+  serial_number: b37367a1
+  manufacturer_date: 6/2020
+  capacity: 29.8 GiB
+  total_bytes: 32010928128
+
+***distribution***
+  name: Raspbian GNU/Linux 11 (bullseye)
+  id: raspbian
+  version: 11
+  version_parts: {'major': '11', 'minor': '', 'build_number': ''}
+  like: debian
+  codename: bullseye
+  release_info: {'name': 'MainsailOS', 'version_id': '1.0.1', 'codename': 'bullseye', 'id': 'mainsailos'}
+
+***virtualization***
+  virt_type: none
+  virt_identifier: none
+
+***network***
+
+***canbus***
+
+***Allowed Services***
+  klipper_mcu
+  webcamd
+  MoonCord
+  KlipperScreen
+  moonraker-telegram-bot
+  moonraker-obico
+  sonar
+  crowsnest
+  octoeverywhere
+  ratos-configurator
+
+Systemd unit moonraker.service:
+unit_name: moonraker.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'klipper.service', 'sysinit.target']
+**SupplementaryGroups=['moonraker-admin']
+**EnvironmentFiles=/home/denny/printer_data/systemd/moonraker.env
+**ExecStart=/home/denny/moonraker-env/bin/python $MOONRAKER_ARGS
+**WorkingDirectory=/home/denny/moonraker
+**FragmentPath=/etc/systemd/system/moonraker.service
+**Description=API Server for Klipper SV1
+**User=denny
+
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['system.slice', 'sysinit.target', '-.mount']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/denny/printer_data/systemd/klipper.env
+**ExecStart=/home/denny/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/denny/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=denny
+Klipper Version: v0.11.0-148-g52f4e20c
+2023-03-29 15:33:10,569 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.133
+2023-03-29 15:33:10,576 [app.py:log_request()] - 101 GET /websocket (192.168.1.133) [_TRUSTED_USER_] 9.51ms
+2023-03-29 15:33:10,577 [websockets.py:open()] - Websocket Opened: ID: 1720201496, Proxied: True, User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36, Host Name: voron24.local
+2023-03-29 15:33:10,599 [websockets.py:_handle_identify()] - Websocket 1720201496 Client Identified - Name: mainsail, Version: 2.5.0, Type: web
+2023-03-29 15:42:46,169 [websockets.py:on_close()] - Websocket Closed: ID: 1720201496 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 5.58
+2023-03-29 16:36:04,320 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.133
+2023-03-29 16:52:11,054 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.133
+2023-03-29 16:52:11,060 [app.py:log_request()] - 101 GET /websocket (192.168.1.133) [_TRUSTED_USER_] 11.99ms
+2023-03-29 16:52:11,062 [websockets.py:open()] - Websocket Opened: ID: 1720227776, Proxied: True, User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36, Host Name: voron24.local
+2023-03-29 16:52:11,081 [websockets.py:_handle_identify()] - Websocket 1720227776 Client Identified - Name: mainsail, Version: 2.5.0, Type: web
+2023-03-29 17:02:30,937 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': 'Move out of range: 58.000 400.000 30.000 [0.000]'}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': 'Move out of range: 58.000 400.000 30.000 [0.000]'}
+2023-03-29 17:11:21,131 [app.py:log_request()] - 201 POST /server/files/upload (192.168.1.133) [_TRUSTED_USER_] 33.74ms
+2023-03-29 17:11:22,195 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2023-03-29 17:11:23,462 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2023-03-29 17:11:31,283 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2023-03-29 17:11:31,288 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2023-03-29 17:11:31,535 [job_state.py:_handle_started()] - Job state initialized: standby
+2023-03-29 17:11:31,848 [klippy_connection.py:_check_ready()] - Klippy ready
+2023-03-29 17:11:32,330 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'temperature_sensor chamber_temp', 'extruder']
+2023-03-29 17:14:10,091 [websockets.py:on_close()] - Websocket Closed: ID: 1720227776 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 9.02
+2023-03-29 18:16:04,348 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.133
+2023-03-29 20:13:31,998 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.14
+2023-03-29 20:13:32,003 [app.py:log_request()] - 101 GET /websocket (192.168.1.14) [_TRUSTED_USER_] 9.74ms
+2023-03-29 20:13:32,005 [websockets.py:open()] - Websocket Opened: ID: 1719942184, Proxied: True, User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36, Host Name: voron24.local
+2023-03-29 20:13:32,011 [websockets.py:_handle_identify()] - Websocket 1719942184 Client Identified - Name: mainsail, Version: 2.5.0, Type: web
+2023-03-29 20:14:03,770 [websockets.py:on_close()] - Websocket Closed: ID: 1719942184 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 1.76
+2023-03-29 20:16:28,631 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.133
+2023-03-29 20:16:28,635 [app.py:log_request()] - 101 GET /websocket (192.168.1.133) [_TRUSTED_USER_] 9.08ms
+2023-03-29 20:16:28,636 [websockets.py:open()] - Websocket Opened: ID: 1719942640, Proxied: True, User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36, Host Name: voron24.local
+2023-03-29 20:16:28,668 [websockets.py:_handle_identify()] - Websocket 1719942640 Client Identified - Name: mainsail, Version: 2.5.0, Type: web
+2023-03-29 20:26:30,140 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+2023-03-29 20:28:54,113 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+2023-03-29 20:36:17,400 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2023-03-29 20:36:18,667 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2023-03-29 20:36:26,447 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2023-03-29 20:36:26,454 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2023-03-29 20:36:26,700 [job_state.py:_handle_started()] - Job state initialized: standby
+2023-03-29 20:36:26,997 [klippy_connection.py:_check_ready()] - Klippy ready
+2023-03-29 20:36:27,495 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'temperature_sensor chamber_temp', 'extruder']
+2023-03-29 20:38:33,209 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+2023-03-29 20:43:29,675 [app.py:log_request()] - 201 POST /server/files/upload (192.168.1.133) [_TRUSTED_USER_] 38.85ms
+2023-03-29 20:43:30,759 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2023-03-29 20:43:32,026 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2023-03-29 20:43:39,922 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2023-03-29 20:43:39,927 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2023-03-29 20:43:40,173 [job_state.py:_handle_started()] - Job state initialized: standby
+2023-03-29 20:43:40,477 [klippy_connection.py:_check_ready()] - Klippy ready
+2023-03-29 20:43:40,956 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'temperature_sensor chamber_temp', 'extruder']
+2023-03-29 20:45:09,033 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro _SetProbeState:gcode': gcode.CommandError: Probe attach failed!\n"}
+2023-03-29 20:48:22,348 [app.py:log_request()] - 201 POST /server/files/upload (192.168.1.133) [_TRUSTED_USER_] 33.44ms
+2023-03-29 20:48:23,434 [klippy_connection.py:_on_connection_closed()] - Klippy Connection Removed
+2023-03-29 20:48:24,700 [klippy_connection.py:_do_connect()] - Klippy Connection Established
+2023-03-29 20:48:32,483 [klippy_connection.py:_request_initial_subscriptions()] - Webhooks Subscribed
+2023-03-29 20:48:32,487 [klippy_connection.py:_request_initial_subscriptions()] - GCode Output Subscribed
+2023-03-29 20:48:32,734 [job_state.py:_handle_started()] - Job state initialized: standby
+2023-03-29 20:48:33,021 [klippy_connection.py:_check_ready()] - Klippy ready
+2023-03-29 20:48:33,541 [data_store.py:_init_sensors()] - Configuring available sensors: ['heater_bed', 'temperature_sensor chamber_temp', 'extruder']
+2023-03-29 20:48:50,556 [common.py:build_error()] - JSON-RPC Request Error: 400
+{'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro Attach_Probe:gcode': gcode.CommandError: Must Home X and Y Axis First!\n"}
+Traceback (most recent call last):
+  File "/home/denny/moonraker/moonraker/common.py", line 541, in execute_method
+    result = await callback(params)
+  File "/home/denny/moonraker/moonraker/websockets.py", line 113, in func
+    result = await callback(
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 522, in request
+    return await self._request_standard(web_request)
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 577, in _request_standard
+    return await base_request.wait()
+  File "/home/denny/moonraker/moonraker/klippy_connection.py", line 692, in wait
+    raise self.response
+moonraker.utils.ServerError: {'error': 'WebRequestError', 'message': "Error evaluating 'gcode_macro Attach_Probe:gcode': gcode.CommandError: Must Home X and Y Axis First!\n"}
+2023-03-29 20:51:32,108 [klippy_connection.py:wait()] - Request 'gcode/script' pending: 60.00 seconds
+2023-03-29 20:52:32,112 [klippy_connection.py:wait()] - Request 'gcode/script' pending: 120.01 seconds
+2023-03-29 20:53:32,114 [klippy_connection.py:wait()] - Request 'gcode/script' pending: 180.01 seconds
+2023-03-29 20:58:12,458 [websockets.py:on_close()] - Websocket Closed: ID: 1719942640 Close Code: 1001, Close Reason: None, Pong Time Elapsed: 3.72
+2023-03-29 21:16:04,399 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.14
+2023-03-29 21:51:04,408 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.133
+2023-03-29 22:22:05,713 [authorization.py:_check_trusted_connection()] - Trusted Connection Detected, IP: 192.168.1.14
+2023-03-29 22:22:05,717 [app.py:log_request()] - 101 GET /websocket (192.168.1.14) [_TRUSTED_USER_] 9.70ms
+2023-03-29 22:22:05,719 [websockets.py:open()] - Websocket Opened: ID: 1749924568, Proxied: True, User Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36, Host Name: voron24.local
+2023-03-29 22:22:05,728 [websockets.py:_handle_identify()] - Websocket 1749924568 Client Identified - Name: mainsail, Version: 2.5.0, Type: web
+2023-03-29 23:26:04,437 [authorization.py:_prune_conn_handler()] - Trusted Connection Expired, IP: 192.168.1.14
+2023-03-29 23:35:25,057 [websockets.py:on_close()] - Websocket Closed: ID: 1749924568 Close Code: None, Close Reason: None, Pong Time Elapsed: 9.33

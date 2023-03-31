@@ -1,0 +1,350 @@
+--------------------Moonraker Log Start--------------------
+data_path: /home/denny/printer_data
+is_default_data_path: False
+config_file: /home/denny/printer_data/config/moonraker.conf
+startup_warnings: []
+verbose: False
+debug: False
+asyncio_debug: False
+is_backup_config: False
+is_python_package: False
+log_file: /home/denny/printer_data/logs/moonraker.log
+software_version: v0.8.0-30-g110cbd1
+python_version: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+#################### Moonraker Configuration ####################
+
+[server]
+host = 0.0.0.0
+port = 7125
+max_upload_size = 1024
+klippy_uds_address = ~/printer_data/comms/klippy.sock
+
+[file_manager]
+enable_object_processing = False
+
+[authorization]
+cors_domains = 
+	https://my.mainsail.xyz
+	http://my.mainsail.xyz
+	http://*.local
+	http://*.lan
+trusted_clients = 
+	10.0.0.0/8
+	127.0.0.0/8
+	169.254.0.0/16
+	172.16.0.0/12
+	192.168.0.0/16
+	FE80::/10
+	::1/128
+
+[octoprint_compat]
+
+[history]
+
+[announcements]
+subscriptions = 
+	mainsail
+
+[update_manager]
+refresh_interval = 168
+enable_auto_refresh = True
+
+[update_manager mainsail]
+type = web
+channel = stable
+repo = mainsail-crew/mainsail
+path = ~/mainsail
+
+[update_manager mainsail-config]
+type = git_repo
+primary_branch = master
+path = ~/mainsail-config
+origin = https://github.com/mainsail-crew/mainsail-config.git
+managed_services = klipper
+
+[update_manager crowsnest]
+type = git_repo
+path = ~/crowsnest
+origin = https://github.com/mainsail-crew/crowsnest.git
+managed_services = crowsnest
+install_script = tools/install.sh
+
+[update_manager sonar]
+type = git_repo
+path = ~/sonar
+origin = https://github.com/mainsail-crew/sonar.git
+primary_branch = main
+managed_services = sonar
+install_script = tools/install.sh
+
+[update_manager client z_calibration]
+type = git_repo
+path = ~/klipper_z_calibration
+origin = https://github.com/protoloft/klipper_z_calibration.git
+install_script = install.sh
+managed_services = klipper
+
+#################################################################
+All Configuration Files:
+/home/denny/printer_data/config/moonraker.conf
+#################################################################
+Unsafe Shutdown Count: 0
+
+System Info:
+
+***python***
+  version: sys.version_info(major=3, minor=9, micro=2, releaselevel='final', serial=0)
+  version_string: 3.9.2 (default, Mar 12 2021, 04:06:34)  [GCC 10.2.1 20210110]
+
+***cpu_info***
+  cpu_count: 4
+  bits: 32bit
+  processor: armv7l
+  cpu_desc: ARMv7 Processor rev 5 (v7l)
+  serial_number: 50704e00
+  hardware_desc: BCM2835
+  model: Raspberry Pi 2 Model B Rev 1.1
+  total_memory: 761404
+  memory_units: kB
+
+***sd_info***
+  manufacturer_id: 1b
+  manufacturer: Samsung
+  oem_id: 534d
+  product_name: EB1QT
+  product_revision: 3.0
+  serial_number: b37367a1
+  manufacturer_date: 6/2020
+  capacity: 29.8 GiB
+  total_bytes: 32010928128
+
+***distribution***
+  name: Raspbian GNU/Linux 11 (bullseye)
+  id: raspbian
+  version: 11
+  version_parts: {'major': '11', 'minor': '', 'build_number': ''}
+  like: debian
+  codename: bullseye
+  release_info: {'name': 'MainsailOS', 'version_id': '1.0.1', 'codename': 'bullseye', 'id': 'mainsailos'}
+
+***virtualization***
+  virt_type: none
+  virt_identifier: none
+
+***network***
+
+***canbus***
+
+***Allowed Services***
+  klipper_mcu
+  webcamd
+  MoonCord
+  KlipperScreen
+  moonraker-telegram-bot
+  moonraker-obico
+  sonar
+  crowsnest
+  octoeverywhere
+  ratos-configurator
+
+Systemd unit moonraker.service:
+unit_name: moonraker.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'klipper.service', 'sysinit.target']
+**SupplementaryGroups=['moonraker-admin']
+**EnvironmentFiles=/home/denny/printer_data/systemd/moonraker.env
+**ExecStart=/home/denny/moonraker-env/bin/python $MOONRAKER_ARGS
+**WorkingDirectory=/home/denny/moonraker
+**FragmentPath=/etc/systemd/system/moonraker.service
+**Description=API Server for Klipper SV1
+**User=denny
+
+Systemd unit klipper.service:
+unit_name: klipper.service
+is_default: True
+manager: systemd
+Properties:
+**Requires=['system.slice', 'sysinit.target', '-.mount']
+**After=['basic.target', 'systemd-journald.socket', '-.mount', 'network-online.target', 'system.slice', 'sysinit.target']
+**SupplementaryGroups=[]
+**EnvironmentFiles=/home/denny/printer_data/systemd/klipper.env
+**ExecStart=/home/denny/klippy-env/bin/python $KLIPPER_ARGS
+**WorkingDirectory=/home/denny/klipper
+**FragmentPath=/etc/systemd/system/klipper.service
+**Description=Klipper 3D Printer Firmware SV1
+**User=denny
+Klipper Version: v0.11.0-148-g52f4e20c
+2023-03-31 00:48:09,032 [update_manager.py:refresh()] - Detected 4 package updates:
+libwbclient0
+raspinfo
+kms++-utils
+raspi-utils
+2023-03-31 00:48:09,143 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker status -u no) successfully finished
+2023-03-31 00:48:09,171 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker config --get branch.master.remote) successfully finished
+2023-03-31 00:48:09,200 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker remote get-url origin) successfully finished
+2023-03-31 00:48:18,132 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker fetch origin --prune --progress) successfully finished
+2023-03-31 00:48:18,172 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker merge-base --is-ancestor HEAD origin/master) successfully finished
+2023-03-31 00:48:18,209 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker branch --list) successfully finished
+2023-03-31 00:48:18,239 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker rev-parse HEAD) successfully finished
+2023-03-31 00:48:18,278 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker describe --always --tags --long --dirty) successfully finished
+2023-03-31 00:48:18,307 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker rev-parse origin/master) successfully finished
+2023-03-31 00:48:18,343 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker describe origin/master --always --tags --long) successfully finished
+2023-03-31 00:48:18,378 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker rev-list --tags --max-count=1) successfully finished
+2023-03-31 00:48:18,414 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/moonraker describe --tags d549af915fe50c2e274dc99ac0b772ae0276646e) successfully finished
+2023-03-31 00:48:18,415 [git_deploy.py:log_repo_info()] - Git Repo moonraker Detected:
+Owner: Arksine
+Repository Name: moonraker
+Path: /home/denny/moonraker
+Remote: origin
+Branch: master
+Remote URL: https://github.com/Arksine/moonraker.git
+Current Commit SHA: 110cbd108409aecb4e5654b0f811cad047cd909b
+Upstream Commit SHA: 110cbd108409aecb4e5654b0f811cad047cd909b
+Current Version: v0.8.0-30
+Upstream Version: v0.8.0-30
+Is Dirty: False
+Is Detached: False
+Commits Behind: 0
+Tag Data: {}
+Bound Repo: None
+Diverged: False
+2023-03-31 00:48:18,416 [base_deploy.py:log_info()] - Application moonraker: Channel: dev, Need Channel Update: False
+2023-03-31 00:48:18,416 [base_deploy.py:log_info()] - Application moonraker: Validity check for git repo passed
+2023-03-31 00:48:18,475 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper status -u no) successfully finished
+2023-03-31 00:48:18,502 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper config --get branch.master.remote) successfully finished
+2023-03-31 00:48:18,530 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper remote get-url origin) successfully finished
+2023-03-31 00:48:22,201 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper fetch origin --prune --progress) successfully finished
+2023-03-31 00:48:22,239 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper merge-base --is-ancestor HEAD origin/master) successfully finished
+2023-03-31 00:48:22,271 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper branch --list) successfully finished
+2023-03-31 00:48:22,299 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper rev-parse HEAD) successfully finished
+2023-03-31 00:48:22,646 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper describe --always --tags --long --dirty) successfully finished
+2023-03-31 00:48:22,675 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper rev-parse origin/master) successfully finished
+2023-03-31 00:48:23,000 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper describe origin/master --always --tags --long) successfully finished
+2023-03-31 00:48:23,032 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper rev-list --tags --max-count=1) successfully finished
+2023-03-31 00:48:23,064 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper describe --tags e02b725602067a2cd098a62be9a4bb10fc74a9bd) successfully finished
+2023-03-31 00:48:23,099 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper log 52f4e20c26039a67da7c223fc72fd34a8ef9a294..origin/master --format="sha:%H%x1Dauthor:%an%x1Ddate:%ct%x1Dsubject:%s%x1Dmessage:%b%x1E" --max-count=100) successfully finished
+2023-03-31 00:48:23,135 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/klipper for-each-ref --count=10 --sort='-creatordate' --format='%(if)%(*objecttype)%(then)%(*objecttype) (*objectname)%(else)%(objecttype) %(objectname)%(end) %(refname)' 'refs/tags') successfully finished
+2023-03-31 00:48:23,136 [git_deploy.py:log_repo_info()] - Git Repo klipper Detected:
+Owner: Klipper3d
+Repository Name: klipper
+Path: /home/denny/klipper
+Remote: origin
+Branch: master
+Remote URL: https://github.com/Klipper3d/klipper.git
+Current Commit SHA: 52f4e20c26039a67da7c223fc72fd34a8ef9a294
+Upstream Commit SHA: fec7ddd8aefd9561fffd7f1ccecd7231002dc884
+Current Version: v0.11.0-148
+Upstream Version: v0.11.0-159
+Is Dirty: False
+Is Detached: False
+Commits Behind: 11
+Tag Data: {}
+Bound Repo: None
+Diverged: False
+2023-03-31 00:48:23,137 [base_deploy.py:log_info()] - Application klipper: Channel: dev, Need Channel Update: False
+2023-03-31 00:48:23,137 [base_deploy.py:log_info()] - Application klipper: Validity check for git repo passed
+2023-03-31 00:48:23,422 [update_manager.py:_get_remote_version()] - Github client Info Received:
+Repo: mainsail
+Local Version: v2.5.0
+Remote Version: v2.5.0
+Pre-release: False
+url: https://github.com/mainsail-crew/mainsail/releases/download/v2.5.0/mainsail.zip
+size: 1978166
+Content Type: application/zip
+2023-03-31 00:48:23,496 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config status -u no) successfully finished
+2023-03-31 00:48:23,526 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config config --get branch.master.remote) successfully finished
+2023-03-31 00:48:23,555 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config remote get-url origin) successfully finished
+2023-03-31 00:48:24,505 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config fetch origin --prune --progress) successfully finished
+2023-03-31 00:48:24,537 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config merge-base --is-ancestor HEAD origin/master) successfully finished
+2023-03-31 00:48:24,568 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config branch --list) successfully finished
+2023-03-31 00:48:24,598 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config rev-parse HEAD) successfully finished
+2023-03-31 00:48:24,647 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config describe --always --tags --long --dirty) successfully finished
+2023-03-31 00:48:24,685 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config rev-parse origin/master) successfully finished
+2023-03-31 00:48:24,721 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config describe origin/master --always --tags --long) successfully finished
+2023-03-31 00:48:24,754 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config rev-list --tags --max-count=1) successfully finished
+2023-03-31 00:48:24,787 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/mainsail-config describe --tags 1d096a14c7835ef3b1ec63971f8e1b6295a2f3dd) successfully finished
+2023-03-31 00:48:24,789 [git_deploy.py:log_repo_info()] - Git Repo mainsail-config Detected:
+Owner: mainsail-crew
+Repository Name: mainsail-config
+Path: /home/denny/mainsail-config
+Remote: origin
+Branch: master
+Remote URL: https://github.com/mainsail-crew/mainsail-config.git
+Current Commit SHA: 52d4c47bef7a9fe6c6ca8ef6b09ceff7b8731de1
+Upstream Commit SHA: 52d4c47bef7a9fe6c6ca8ef6b09ceff7b8731de1
+Current Version: v1.0.0-9
+Upstream Version: v1.0.0-9
+Is Dirty: False
+Is Detached: False
+Commits Behind: 0
+Tag Data: {}
+Bound Repo: None
+Diverged: False
+2023-03-31 00:48:24,790 [base_deploy.py:log_info()] - Application mainsail-config: Channel: dev, Need Channel Update: False
+2023-03-31 00:48:24,790 [base_deploy.py:log_info()] - Application mainsail-config: Validity check for git repo passed
+2023-03-31 00:48:24,835 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest status -u no) successfully finished
+2023-03-31 00:48:24,863 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest config --get branch.master.remote) successfully finished
+2023-03-31 00:48:24,893 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest remote get-url origin) successfully finished
+2023-03-31 00:48:25,800 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest fetch origin --prune --progress) successfully finished
+2023-03-31 00:48:25,835 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest merge-base --is-ancestor HEAD origin/master) successfully finished
+2023-03-31 00:48:25,865 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest branch --list) successfully finished
+2023-03-31 00:48:25,894 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest rev-parse HEAD) successfully finished
+2023-03-31 00:48:25,942 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest describe --always --tags --long --dirty) successfully finished
+2023-03-31 00:48:25,971 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest rev-parse origin/master) successfully finished
+2023-03-31 00:48:26,010 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest describe origin/master --always --tags --long) successfully finished
+2023-03-31 00:48:26,050 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest rev-list --tags --max-count=1) successfully finished
+2023-03-31 00:48:26,083 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/crowsnest describe --tags 9a663584433bec74059ce7b205ecdcb32efa27f7) successfully finished
+2023-03-31 00:48:26,084 [git_deploy.py:log_repo_info()] - Git Repo crowsnest Detected:
+Owner: mainsail-crew
+Repository Name: crowsnest
+Path: /home/denny/crowsnest
+Remote: origin
+Branch: master
+Remote URL: https://github.com/mainsail-crew/crowsnest.git
+Current Commit SHA: 20ed6a8b585a92e8a0e7d8333e81b6e8ca7044e1
+Upstream Commit SHA: 20ed6a8b585a92e8a0e7d8333e81b6e8ca7044e1
+Current Version: v3.0.7-3
+Upstream Version: v3.0.7-3
+Is Dirty: False
+Is Detached: False
+Commits Behind: 0
+Tag Data: {}
+Bound Repo: None
+Diverged: False
+2023-03-31 00:48:26,085 [base_deploy.py:log_info()] - Application crowsnest: Channel: dev, Need Channel Update: False
+2023-03-31 00:48:26,085 [base_deploy.py:log_info()] - Application crowsnest: Validity check for git repo passed
+2023-03-31 00:48:26,129 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar status -u no) successfully finished
+2023-03-31 00:48:26,157 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar config --get branch.main.remote) successfully finished
+2023-03-31 00:48:26,188 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar remote get-url origin) successfully finished
+2023-03-31 00:48:27,142 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar fetch origin --prune --progress) successfully finished
+2023-03-31 00:48:27,175 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar merge-base --is-ancestor HEAD origin/main) successfully finished
+2023-03-31 00:48:27,205 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar branch --list) successfully finished
+2023-03-31 00:48:27,234 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar rev-parse HEAD) successfully finished
+2023-03-31 00:48:27,269 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar describe --always --tags --long --dirty) successfully finished
+2023-03-31 00:48:27,297 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar rev-parse origin/main) successfully finished
+2023-03-31 00:48:27,333 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar describe origin/main --always --tags --long) successfully finished
+2023-03-31 00:48:27,375 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar rev-list --tags --max-count=1) successfully finished
+2023-03-31 00:48:27,420 [shell_command.py:_check_proc_success()] - Command (git -C /home/denny/sonar describe --tags 7962a1225ad88fa2a642ae2b378637491b4b2710) successfully finished
+2023-03-31 00:48:27,423 [git_deploy.py:log_repo_info()] - Git Repo sonar Detected:
+Owner: mainsail-crew
+Repository Name: sonar
+Path: /home/denny/sonar
+Remote: origin
+Branch: main
+Remote URL: https://github.com/mainsail-crew/sonar.git
+Current Commit SHA: 7962a1225ad88fa2a642ae2b378637491b4b2710
+Upstream Commit SHA: 7962a1225ad88fa2a642ae2b378637491b4b2710
+Current Version: v0.1.2-0
+Upstream Version: v0.1.2-0
+Is Dirty: False
+Is Detached: False
+Commits Behind: 0
+Tag Data: {}
+Bound Repo: None
+Diverged: False
+2023-03-31 00:48:27,423 [base_deploy.py:log_info()] - Application sonar: Channel: dev, Need Channel Update: False
+2023-03-31 00:48:27,423 [base_deploy.py:log_info()] - Application sonar: Validity check for git repo passed
